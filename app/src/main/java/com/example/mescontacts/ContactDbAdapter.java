@@ -25,8 +25,9 @@ public class ContactDbAdapter {
      * Database creation sql statement
      */
     private static final String DATABASE_CREATE =
-            "create table contacts (_id integer primary key autoincrement, "
-                    + "title text not null, body text not null);";
+            "create table contact (_id integer primary key autoincrement, "
+                    + "nom text not null, prenom text not null, " +
+                    "telephone text not null, mail text not null, adresse text);";
 
     private static final String DATABASE_NAME = "data";
     private static final String DATABASE_TABLE = "contacts";
@@ -50,7 +51,7 @@ public class ContactDbAdapter {
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
                     + newVersion + ", which will destroy all old data");
-            db.execSQL("DROP TABLE IF EXISTS notes");
+            db.execSQL("DROP TABLE IF EXISTS contact");
             onCreate(db);
         }
     }
