@@ -19,13 +19,8 @@ import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 public class MainActivity extends AppCompatActivity {
 
-    ListView maList;
-    ContactDbAdapter maBase;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        maBase = new ContactDbAdapter(this);
-        maBase.open();
 
 
         super.onCreate(savedInstanceState);

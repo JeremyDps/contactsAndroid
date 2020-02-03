@@ -25,7 +25,7 @@ public class ContactDbAdapter {
      * Database creation sql statement
      */
     private static final String DATABASE_CREATE =
-            "create table notes (_id integer primary key autoincrement, "
+            "create table contacts (_id integer primary key autoincrement, "
                     + "title text not null, body text not null);";
 
     private static final String DATABASE_NAME = "data";
