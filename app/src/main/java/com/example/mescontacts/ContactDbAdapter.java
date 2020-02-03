@@ -10,8 +10,11 @@ import android.util.Log;
 
 public class ContactDbAdapter {
 
-    public static final String KEY_TITLE = "title";
-    public static final String KEY_BODY = "body";
+    public static final String KEY_NOM = "nom";
+    public static final String KEY_PRENOM = "prenom";
+    public static final String KEY_NUM = "numéro de telephone";
+    public static final String KEY_MAIL = "adresse mail";
+    public static final String KEY_ADR = "adresse";
     public static final String KEY_ROWID = "_id";
 
     private static final String TAG = "ContactDbAdapter";
@@ -91,10 +94,13 @@ public class ContactDbAdapter {
      * @param body the body of the note
      * @return rowId or -1 if failed
      */
-    public long createContact(String title, String body) {
+    public long createContact(String nom, String prenom, String num, String mail, String adr ) {
         ContentValues initialValues = new ContentValues();
-        initialValues.put(KEY_TITLE, title);
-        initialValues.put(KEY_BODY, body);
+        initialValues.put(KEY_NOM, nom);
+        initialValues.put(KEY_PRENOM, prenom);
+        initialValues.put(KEY_NUM, num);
+        initialValues.put(KEY_MAIL, mail);
+        initialValues.put(KEY_ADR, adr);
 
         return mDb.insert(DATABASE_TABLE, null, initialValues);
     }
@@ -123,8 +129,8 @@ public class ContactDbAdapter {
      */
     public Cursor fetchAllContact() {
 
-        return mDb.query(DATABASE_TABLE, new String[] {KEY_ROWID, KEY_TITLE,
-                KEY_BODY}, null, null, null, null, null);
+        return mDb.query(DATABASE_TABLE, new String[] {KEY_ROWID, KEY_NOM,
+                KEY_PRENOM, KEY_NUM, KEY_MAIL, KEY_ADR}, null, null, null, null, null);
     }
 
     /**
@@ -139,7 +145,7 @@ public class ContactDbAdapter {
         Cursor mCursor =
 
                 mDb.query(true, DATABASE_TABLE, new String[] {KEY_ROWID,
-                                KEY_TITLE, KEY_BODY}, KEY_ROWID + "=" + rowId, null,
+                                KEY_NOM, KEY_PRENOM, KEY_NUM, KEY_MAIL, KEY_ADR}, KEY_ROWID + "=" + rowId, null,
                         null, null, null, null);
         if (mCursor != null) {
             mCursor.moveToFirst();
@@ -158,10 +164,14 @@ public class ContactDbAdapter {
      * @param body value to set note body to
      * @return true if the note was successfully updated, false otherwise
      */
-    public boolean updateContact(long rowId, String title, String body) {
+    public boolean updateContact(long rowId, String nom, String prenom, String num, String mail, String adr) {
         ContentValues args = new ContentValues();
-        args.put(KEY_TITLE, title);
-        args.put(KEY_BODY, body);
+        args.put(KEY_NOM, nom);
+        args.put(KEY_PRENOM, prenom);
+        args.put(KEY_NUM, num);
+        args.put(KEY_MAIL, mail);
+        args.put(KEY_ADR, adr);
+
 
         return mDb.update(DATABASE_TABLE, args, KEY_ROWID + "=" + rowId, null) > 0;
     }
