@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //lorsqu'on clique sur le +, on appelle switchActivity
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //dirige vers la vue d'ajout de contact
     public void switchActivity(View view) {
         Intent intent = new Intent(this, NewContactActivity.class);
         startActivity(intent);

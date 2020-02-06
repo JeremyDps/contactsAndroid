@@ -38,6 +38,7 @@ public class NewContactActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_contact);
 
+        //lorsqu'on clique sur le +, on appelle addItem()
         FloatingActionButton fab = findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,6 +48,7 @@ public class NewContactActivity extends AppCompatActivity {
         });
     }
 
+    //crée un nouveau contact dans la BDD
     public void addItem() {
         maBase.createContact(nom.getText().toString(), prenom.getText().toString(), num.getText().toString(), mail.getText().toString(), adr.getText().toString());
         fillData();
