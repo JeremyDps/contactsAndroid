@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendMessage(view);
+                switchActivity(view);
             }
         });
     }
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void sendMessage(View view) {
+    public void switchActivity(View view) {
         Intent intent = new Intent(this, NewContactActivity.class);
         startActivity(intent);
     }
