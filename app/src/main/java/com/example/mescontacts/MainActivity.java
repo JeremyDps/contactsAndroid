@@ -1,6 +1,7 @@
 package com.example.mescontacts;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -14,10 +15,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 public class MainActivity extends AppCompatActivity {
+
+    ContactDbAdapter maBase;
+    ListView list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        maBase = new ContactDbAdapter(this);
+        maBase.open();
 
         //lorsqu'on clique sur le +, on appelle switchActivity
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -64,6 +72,20 @@ public class MainActivity extends AppCompatActivity {
     public void switchActivity(View view) {
         Intent intent = new Intent(this, NewContactActivity.class);
         startActivity(intent);
+    }
+
+    private void fillData() {
+        // Get all of the notes from the database and create the item list
+        Cursor c = maBase.fetchAllContact();
+        startManagingCursor(c);
+
+        String[] from = new String[] { ContactDbAdapter.KEY_NOM };
+        int[] to = new int[] { R.id.text1};
+
+        // Now create an array adapter and set it to display using our row
+        SimpleCursorAdapter notes =
+                new SimpleCursorAdapter(this, R.layout.activity_new_contact, c, from, to);
+        list.setAdapter(notes);
     }
 
 }
