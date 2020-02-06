@@ -2,8 +2,10 @@ package com.example.mescontacts;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -43,15 +45,16 @@ public class NewContactActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addItem();
+                addItem(view);
             }
         });
     }
 
     //crée un nouveau contact dans la BDD
-    public void addItem() {
+    public void addItem(View view) {
         maBase.createContact(nom.getText().toString(), prenom.getText().toString(), num.getText().toString(), mail.getText().toString(), adr.getText().toString());
-        fillData();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
     private void fillData() {

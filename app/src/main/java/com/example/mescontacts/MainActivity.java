@@ -21,6 +21,9 @@ import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 public class MainActivity extends AppCompatActivity {
 
+    ContactDbAdapter maBase;
+    ListView list;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -30,7 +33,12 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        filldata();
+        list = findViewById(R.id.taskList);
+
+        maBase = new ContactDbAdapter(this);
+        maBase.open();
+
+        fillData();
 
         //lorsqu'on clique sur le +, on appelle switchActivity
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -70,7 +78,18 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void fillData() {
+        // Get all of the notes from the database and create the item list
+        Cursor c = maBase.fetchAllContact();
+        startManagingCursor(c);
 
+        String[] from = new String[] { ContactDbAdapter.KEY_NOM };
+        int[] to = new int[] { R.id.contact};
 
+        // Now create an array adapter and set it to display using our row
+        SimpleCursorAdapter notes =
+                new SimpleCursorAdapter(this, R.layout.contacts_row, c, from, to);
+        list.setAdapter(notes);
+    }
 
 }
