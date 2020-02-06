@@ -12,8 +12,8 @@ public class ContactDbAdapter {
 
     public static final String KEY_NOM = "nom";
     public static final String KEY_PRENOM = "prenom";
-    public static final String KEY_NUM = "numéro de telephone";
-    public static final String KEY_MAIL = "adresse mail";
+    public static final String KEY_NUM = "telephone";
+    public static final String KEY_MAIL = "mail";
     public static final String KEY_ADR = "adresse";
     public static final String KEY_ROWID = "_id";
 
@@ -30,7 +30,7 @@ public class ContactDbAdapter {
                     "telephone text not null, mail text not null, adresse text);";
 
     private static final String DATABASE_NAME = "data";
-    private static final String DATABASE_TABLE = "contacts";
+    private static final String DATABASE_TABLE = "contact";
     private static final int DATABASE_VERSION = 2;
 
     private final Context mCtx;

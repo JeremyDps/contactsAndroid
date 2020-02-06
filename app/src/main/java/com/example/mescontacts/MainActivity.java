@@ -33,8 +33,12 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        list = findViewById(R.id.taskList);
+
         maBase = new ContactDbAdapter(this);
         maBase.open();
+
+        fillData();
 
         //lorsqu'on clique sur le +, on appelle switchActivity
         FloatingActionButton fab = findViewById(R.id.fab);
