@@ -1,6 +1,7 @@
 package com.example.mescontacts;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -14,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
@@ -27,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        filldata();
 
         //lorsqu'on clique sur le +, on appelle switchActivity
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -65,5 +69,8 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, NewContactActivity.class);
         startActivity(intent);
     }
+
+
+
 
 }

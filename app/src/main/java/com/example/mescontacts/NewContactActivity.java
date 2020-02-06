@@ -2,7 +2,6 @@ package com.example.mescontacts;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
@@ -31,6 +30,7 @@ public class NewContactActivity extends AppCompatActivity {
         num = findViewById(R.id.numTel);
         mail = findViewById(R.id.email);
         adr = findViewById(R.id.adresse);
+        list = findViewById(R.id.taskList);
 
         maBase = new ContactDbAdapter(this);
         maBase.open();
@@ -63,9 +63,9 @@ public class NewContactActivity extends AppCompatActivity {
         int[] to = new int[] { R.id.nom};
 
         // Now create an array adapter and set it to display using our row
-        SimpleCursorAdapter notes =
-                new SimpleCursorAdapter(this, R.layout.activity_new_contact, c, from, to);
-        list.setAdapter(notes);
+        SimpleCursorAdapter contacts =
+                new SimpleCursorAdapter(this, R.layout.contacts_row, c, from, to);
+        list.setAdapter(contacts);
     }
 
 }
