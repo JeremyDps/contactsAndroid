@@ -52,7 +52,12 @@ public class NewContactActivity extends AppCompatActivity {
 
     //crée un nouveau contact dans la BDD
     public void addItem(View view) {
-        maBase.createContact(nom.getText().toString(), prenom.getText().toString(), num.getText().toString(), mail.getText().toString(), adr.getText().toString());
+        nom = findViewById(R.id.nom);
+        prenom = findViewById(R.id.prenom);
+        num = findViewById(R.id.numTel);
+        mail = findViewById(R.id.email);
+        adr = findViewById(R.id.adresse);
+        maBase.createContact(nom.getText().toString(),prenom.getText().toString(),num.getText().toString(), mail.getText().toString(), adr.getText().toString());
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
@@ -63,7 +68,7 @@ public class NewContactActivity extends AppCompatActivity {
         startManagingCursor(c);
 
         String[] from = new String[] { ContactDbAdapter.KEY_NOM };
-        int[] to = new int[] { R.id.nom};
+        int[] to = new int[] { R.id.prenom};
 
         // Now create an array adapter and set it to display using our row
         SimpleCursorAdapter contacts =

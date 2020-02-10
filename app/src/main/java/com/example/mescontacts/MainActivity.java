@@ -1,18 +1,25 @@
 package com.example.mescontacts;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.view.ContextMenu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
@@ -38,7 +45,16 @@ public class MainActivity extends AppCompatActivity {
         maBase = new ContactDbAdapter(this);
         maBase.open();
 
+        registerForContextMenu(list);
+
         fillData();
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switchActivityDetail(view);
+            }
+        });
 
         //lorsqu'on clique sur le +, on appelle switchActivity
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -48,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
                 switchActivity(view);
             }
         });
+
+
     }
 
     @Override
@@ -64,9 +82,8 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_delete) {
+            delete();
         }
 
         return super.onOptionsItemSelected(item);
@@ -77,6 +94,32 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, NewContactActivity.class);
         startActivity(intent);
     }
+
+    public void switchActivityDetail(View view) {
+        Intent intent = new Intent(this, DetailContactActivity.class);
+        startActivity(intent);
+    }
+
+    public void delete() {
+        // Build the dialog and set up the button click handlers
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.dialog_text)
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        maBase.deleteAllContact();
+                        fillData();
+                    }
+                })
+                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Send the negative button event back to the host activity
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+
 
     private void fillData() {
         // Get all of the notes from the database and create the item list
@@ -92,4 +135,26 @@ public class MainActivity extends AppCompatActivity {
         list.setAdapter(notes);
     }
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.context_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        Cursor SelectedTaskCursor = (Cursor) list.getItemAtPosition(info.position);
+        final String SelectedTask = SelectedTaskCursor.getString(SelectedTaskCursor.getColumnIndex("nom"));
+        switch (item.getItemId()) {
+            case R.id.supp:
+                maBase.deleteContact(list.getItemIdAtPosition(info.position));
+                fillData();
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
 }
