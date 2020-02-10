@@ -52,7 +52,19 @@ public class MainActivity extends AppCompatActivity {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switchActivityDetail(view);
+                Cursor c = maBase.fetchContact(id);
+
+                if(c.moveToFirst()) {
+                    String nom = c.getString(1);
+                    String prenom = c.getString(2);
+                    String numero = c.getString(3);
+                    String mail = c.getString(4);
+                    String adresse = c.getString(5);
+
+                    switchActivityDetail(view, nom, prenom, numero, mail, adresse);
+                }
+
+
             }
         });
 
@@ -95,8 +107,13 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void switchActivityDetail(View view) {
-        Intent intent = new Intent(this, DetailContactActivity.class);
+    public void switchActivityDetail(View view, String nom, String prenom, String numero, String mail, String adresse) {
+        Intent intent = new Intent(this, DetailsContactActivity.class);
+        intent.putExtra("nom", nom);
+        intent.putExtra("prenom", prenom);
+        intent.putExtra("numero", numero);
+        intent.putExtra("mail", mail);
+        intent.putExtra("adresse", adresse);
         startActivity(intent);
     }
 
