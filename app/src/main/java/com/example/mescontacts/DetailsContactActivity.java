@@ -3,8 +3,11 @@ package com.example.mescontacts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class DetailsContactActivity extends AppCompatActivity {
@@ -14,6 +17,21 @@ public class DetailsContactActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details_contact);
+
+        ImageView appel = findViewById(R.id.appel);
+        final TextView num_data = findViewById(R.id.number_data);
+
+        ImageView mail = findViewById(R.id.mail);
+
+        appel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("DEBUG", num_data.getText().toString());
+                Intent callIntent = new Intent(Intent.ACTION_CALL);
+                callIntent.setData(Uri.parse("tel:" + num_data.getText().toString()));
+                startActivity(callIntent);
+            }
+        });
 
         Intent intent = getIntent();
 
