@@ -31,6 +31,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
 
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
@@ -175,6 +176,7 @@ public class MainActivity extends AppCompatActivity {
         final String SelectedTask = SelectedTaskCursor.getString(SelectedTaskCursor.getColumnIndex("nom"));
         final String SelectedAddress = SelectedTaskCursor.getString(SelectedTaskCursor.getColumnIndex("adresse"));
         final String SelectedPhoneNumber = SelectedTaskCursor.getString(SelectedTaskCursor.getColumnIndex("telephone"));
+        final String SelectedEMail = SelectedTaskCursor.getString(SelectedTaskCursor.getColumnIndex("mail"));
         switch (item.getItemId()) {
             case R.id.supp:
                 maBase.deleteContact(list.getItemIdAtPosition(info.position));
@@ -187,10 +189,31 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(callIntent);
                 return true;
             case R.id.message:
-                Intent intent = new Intent(this, SendMessageActivity.class);
-                startActivity(intent);
+                Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+                sendIntent.putExtra("sms_body", "0782289527");
+                sendIntent.setType("vnd.android-dir/mms-sms");
+                startActivity(sendIntent);
                 return true;
             case R.id.mail:
+                Log.i("Send email", "");
+                String[] TO = {SelectedEMail};
+                String[] CC = {""};
+                Intent emailIntent = new Intent(Intent.ACTION_SEND);
+
+                emailIntent.setData(Uri.parse("mailto:"));
+                emailIntent.setType("text/plain");
+                emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
+                emailIntent.putExtra(Intent.EXTRA_CC, CC);
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "");
+                emailIntent.putExtra(Intent.EXTRA_TEXT, "");
+
+                try {
+                    startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+                    finish();
+                    Log.i("Finished sending email..", "");
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(MainActivity.this, "There is no email client installed.", Toast.LENGTH_SHORT).show();
+                }
                 return true;
             case R.id.adresse:
                 Uri location = Uri.parse("geo:0,0?q=" + SelectedAddress);
