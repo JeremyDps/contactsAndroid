@@ -1,19 +1,24 @@
 package com.example.mescontacts;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -54,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Cursor c = maBase.fetchContact(id);
 
-                if(c.moveToFirst()) {
+                if (c.moveToFirst()) {
                     String nom = c.getString(1);
                     String prenom = c.getString(2);
                     String numero = c.getString(3);
@@ -105,6 +110,13 @@ public class MainActivity extends AppCompatActivity {
     public void switchActivity(View view) {
         Intent intent = new Intent(this, NewContactActivity.class);
         startActivity(intent);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void call() {
+        Intent callIntent = new Intent(Intent.ACTION_CALL);
+        callIntent.setData(Uri.parse("tel:" + "0782289527"));
+        startActivity(callIntent);
     }
 
     public void switchActivityDetail(View view, String nom, String prenom, String numero, String mail, String adresse) {
@@ -160,15 +172,37 @@ public class MainActivity extends AppCompatActivity {
         inflater.inflate(R.menu.context_menu, menu);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         Cursor SelectedTaskCursor = (Cursor) list.getItemAtPosition(info.position);
         final String SelectedTask = SelectedTaskCursor.getString(SelectedTaskCursor.getColumnIndex("nom"));
+        final String SelectedAddress = SelectedTaskCursor.getString(SelectedTaskCursor.getColumnIndex("adresse"));
+        final String SelectedPhoneNumber = SelectedTaskCursor.getString(SelectedTaskCursor.getColumnIndex("telephone"));
         switch (item.getItemId()) {
             case R.id.supp:
                 maBase.deleteContact(list.getItemIdAtPosition(info.position));
                 fillData();
+                return true;
+            case R.id.appeler:
+                Log.i("DEBUG", SelectedPhoneNumber);
+                Intent callIntent = new Intent(Intent.ACTION_CALL);
+                callIntent.setData(Uri.parse("tel:" + SelectedPhoneNumber));
+                startActivity(callIntent);
+                return true;
+            case R.id.message:
+                Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+                sendIntent.putExtra("sms_body", "default content");
+                sendIntent.setType("vnd.android-dir/mms-sms");
+                startActivity(sendIntent);
+                return true;
+            case R.id.mail:
+                return true;
+            case R.id.adresse:
+                Uri location = Uri.parse("geo:0,0?q=" + SelectedAddress);
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, location);
+                startActivity(mapIntent);
                 return true;
             default:
                 return super.onContextItemSelected(item);

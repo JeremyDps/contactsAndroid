@@ -6,4 +6,5 @@
     <string name="no">Non</string>
     <string name="supp">Supprimer le contact</string>
     <string name="deletteAll">Tout supprimer</string>
+    <string name="title_activity_send_message">sendMessageActivity</string>
 </resources>
