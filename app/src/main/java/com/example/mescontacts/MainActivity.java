@@ -2,6 +2,7 @@ package com.example.mescontacts;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -17,7 +18,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 
+<<<<<<< HEAD
+=======
+import android.telephony.TelephonyManager;
+>>>>>>> d5c2e09ef6eb7f842a3805258ea204683021a501
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
@@ -28,6 +34,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
 
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
@@ -149,14 +156,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     private void fillData() {
         // Get all of the notes from the database and create the item list
         Cursor c = maBase.fetchAllContact();
         startManagingCursor(c);
 
-        String[] from = new String[] { ContactDbAdapter.KEY_NOM };
-        int[] to = new int[] { R.id.contact};
+        String[] from = new String[]{ContactDbAdapter.KEY_NOM};
+        int[] to = new int[]{R.id.contact};
 
         // Now create an array adapter and set it to display using our row
         SimpleCursorAdapter notes =
@@ -180,6 +186,10 @@ public class MainActivity extends AppCompatActivity {
         final String SelectedTask = SelectedTaskCursor.getString(SelectedTaskCursor.getColumnIndex("nom"));
         final String SelectedAddress = SelectedTaskCursor.getString(SelectedTaskCursor.getColumnIndex("adresse"));
         final String SelectedPhoneNumber = SelectedTaskCursor.getString(SelectedTaskCursor.getColumnIndex("telephone"));
+<<<<<<< HEAD
+=======
+        final String SelectedEMail = SelectedTaskCursor.getString(SelectedTaskCursor.getColumnIndex("mail"));
+>>>>>>> d5c2e09ef6eb7f842a3805258ea204683021a501
         switch (item.getItemId()) {
             case R.id.supp:
                 maBase.deleteContact(list.getItemIdAtPosition(info.position));
@@ -193,11 +203,37 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.message:
                 Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+<<<<<<< HEAD
                 sendIntent.putExtra("sms_body", "default content");
+=======
+                sendIntent.putExtra("sms_body", "0782289527");
+>>>>>>> d5c2e09ef6eb7f842a3805258ea204683021a501
                 sendIntent.setType("vnd.android-dir/mms-sms");
                 startActivity(sendIntent);
                 return true;
             case R.id.mail:
+<<<<<<< HEAD
+=======
+                Log.i("Send email", "");
+                String[] TO = {SelectedEMail};
+                String[] CC = {""};
+                Intent emailIntent = new Intent(Intent.ACTION_SEND);
+
+                emailIntent.setData(Uri.parse("mailto:"));
+                emailIntent.setType("text/plain");
+                emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
+                emailIntent.putExtra(Intent.EXTRA_CC, CC);
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "");
+                emailIntent.putExtra(Intent.EXTRA_TEXT, "");
+
+                try {
+                    startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+                    finish();
+                    Log.i("Finished sending email..", "");
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(MainActivity.this, "There is no email client installed.", Toast.LENGTH_SHORT).show();
+                }
+>>>>>>> d5c2e09ef6eb7f842a3805258ea204683021a501
                 return true;
             case R.id.adresse:
                 Uri location = Uri.parse("geo:0,0?q=" + SelectedAddress);
@@ -208,4 +244,6 @@ public class MainActivity extends AppCompatActivity {
                 return super.onContextItemSelected(item);
         }
     }
+
+
 }
