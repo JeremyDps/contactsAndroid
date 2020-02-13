@@ -21,9 +21,20 @@ public class DetailsContactActivity extends AppCompatActivity {
         ImageView appel = findViewById(R.id.appel);
         final TextView num_data = findViewById(R.id.number_data);
 
-        ImageView mail = findViewById(R.id.mail);
+        ImageView email = findViewById(R.id.mail);
+        TextView mail_data = findViewById(R.id.mail_data);
 
         appel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("DEBUG", num_data.getText().toString());
+                Intent callIntent = new Intent(Intent.ACTION_CALL);
+                callIntent.setData(Uri.parse("tel:" + num_data.getText().toString()));
+                startActivity(callIntent);
+            }
+        });
+
+        email.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.i("DEBUG", num_data.getText().toString());
