@@ -1,6 +1,6 @@
 package com.example.mescontacts;
 
-<<<<<<< HEAD
+
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -10,11 +10,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.View;
-=======
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
->>>>>>> d5c2e09ef6eb7f842a3805258ea204683021a501
 
 public class SendMessageActivity extends AppCompatActivity {
 
@@ -22,7 +20,6 @@ public class SendMessageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_message);
-<<<<<<< HEAD
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -35,8 +32,4 @@ public class SendMessageActivity extends AppCompatActivity {
             }
         });
     }
-
-=======
-    }
->>>>>>> d5c2e09ef6eb7f842a3805258ea204683021a501
 }

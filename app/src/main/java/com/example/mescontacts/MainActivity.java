@@ -20,10 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 
-<<<<<<< HEAD
-=======
 import android.telephony.TelephonyManager;
->>>>>>> d5c2e09ef6eb7f842a3805258ea204683021a501
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
@@ -119,12 +116,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    public void call() {
-        Intent callIntent = new Intent(Intent.ACTION_CALL);
-        callIntent.setData(Uri.parse("tel:" + "0782289527"));
-        startActivity(callIntent);
-    }
 
     public void switchActivityDetail(View view, String nom, String prenom, String numero, String mail, String adresse) {
         Intent intent = new Intent(this, DetailsContactActivity.class);
@@ -186,10 +177,8 @@ public class MainActivity extends AppCompatActivity {
         final String SelectedTask = SelectedTaskCursor.getString(SelectedTaskCursor.getColumnIndex("nom"));
         final String SelectedAddress = SelectedTaskCursor.getString(SelectedTaskCursor.getColumnIndex("adresse"));
         final String SelectedPhoneNumber = SelectedTaskCursor.getString(SelectedTaskCursor.getColumnIndex("telephone"));
-<<<<<<< HEAD
-=======
         final String SelectedEMail = SelectedTaskCursor.getString(SelectedTaskCursor.getColumnIndex("mail"));
->>>>>>> d5c2e09ef6eb7f842a3805258ea204683021a501
+
         switch (item.getItemId()) {
             case R.id.supp:
                 maBase.deleteContact(list.getItemIdAtPosition(info.position));
@@ -202,18 +191,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(callIntent);
                 return true;
             case R.id.message:
-                Intent sendIntent = new Intent(Intent.ACTION_VIEW);
-<<<<<<< HEAD
-                sendIntent.putExtra("sms_body", "default content");
-=======
-                sendIntent.putExtra("sms_body", "0782289527");
->>>>>>> d5c2e09ef6eb7f842a3805258ea204683021a501
-                sendIntent.setType("vnd.android-dir/mms-sms");
-                startActivity(sendIntent);
+                Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+                smsIntent.setData(Uri.parse("smsto:" + SelectedPhoneNumber));
+                smsIntent.putExtra("sms_body"  , "");
+                startActivity(smsIntent);
                 return true;
             case R.id.mail:
-<<<<<<< HEAD
-=======
                 Log.i("Send email", "");
                 String[] TO = {SelectedEMail};
                 String[] CC = {""};
@@ -233,7 +216,6 @@ public class MainActivity extends AppCompatActivity {
                 } catch (android.content.ActivityNotFoundException ex) {
                     Toast.makeText(MainActivity.this, "There is no email client installed.", Toast.LENGTH_SHORT).show();
                 }
->>>>>>> d5c2e09ef6eb7f842a3805258ea204683021a501
                 return true;
             case R.id.adresse:
                 Uri location = Uri.parse("geo:0,0?q=" + SelectedAddress);
