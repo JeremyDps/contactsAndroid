@@ -7,4 +7,28 @@
         android:title="@string/supp"
         app:actionViewClass="android.widget.SearchView" />
 
+    <item
+        android:id="@+id/appeler"
+        android:icon="@drawable/ic_launcher_background"
+        android:title="Appeler le contact"
+        app:actionViewClass="android.widget.SearchView" />
+
+    <item
+        android:id="@+id/message"
+        android:icon="@drawable/ic_launcher_background"
+        android:title="Envoyer un message"
+        app:actionViewClass="android.widget.SearchView" />
+
+    <item
+        android:id="@+id/mail"
+        android:icon="@drawable/ic_launcher_background"
+        android:title="Envoyer un email"
+        app:actionViewClass="android.widget.SearchView" />
+
+    <item
+        android:id="@+id/adresse"
+        android:icon="@drawable/ic_launcher_background"
+        android:title="Localiser l'adresse"
+        app:actionViewClass="android.widget.SearchView" />
+
 </menu>
