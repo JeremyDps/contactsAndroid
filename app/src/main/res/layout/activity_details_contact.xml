@@ -28,7 +28,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/firstname"
+        android:id="@+id/lastname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -39,13 +39,13 @@
         app:layout_constraintTop_toBottomOf="@+id/name" />
 
     <TextView
-        android:id="@+id/firstname_data"
+        android:id="@+id/lastname"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
-        app:layout_constraintStart_toEndOf="@+id/firstname"
+        app:layout_constraintStart_toEndOf="@+id/lastname"
         app:layout_constraintTop_toBottomOf="@+id/name_data" />
 
     <TextView
@@ -57,7 +57,7 @@
         android:layout_marginTop="20dp"
         android:text="numéro :"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/firstname" />
+        app:layout_constraintTop_toBottomOf="@+id/lastname" />
 
     <TextView
         android:id="@+id/phone_number_data"
@@ -67,7 +67,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
         app:layout_constraintStart_toEndOf="@+id/phone_number"
-        app:layout_constraintTop_toBottomOf="@+id/firstname_data" />
+        app:layout_constraintTop_toBottomOf="@+id/lastname" />
 
     <TextView
         android:id="@+id/email"
@@ -154,5 +154,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/image_email"
         app:srcCompat="@drawable/baseline_message_black_24dp" />
+
+    <TextView
+        android:id="@+id/favori"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        app:layout_constraintTop_toBottomOf="@+id/adress"
+        tools:layout_editor_absoluteX="83dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

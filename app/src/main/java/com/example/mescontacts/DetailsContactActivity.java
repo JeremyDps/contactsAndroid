@@ -23,6 +23,7 @@ public class DetailsContactActivity extends AppCompatActivity {
     TextView phoneNumberData;
     TextView emailData;
     TextView adressData;
+    TextView favori;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +36,11 @@ public class DetailsContactActivity extends AppCompatActivity {
         imageAdress = findViewById(R.id.image_adress);
 
         lastNameData = findViewById(R.id.name_data);
-        firstNameData = findViewById(R.id.firstname_data);
+        firstNameData = findViewById(R.id.lastname);
         emailData = findViewById(R.id.email_data);
         phoneNumberData = findViewById(R.id.phone_number_data);
         adressData = findViewById(R.id.adress_data);
+        favori = findViewById(R.id.favori);
 
         Intent intent = getIntent();
 
@@ -49,7 +51,7 @@ public class DetailsContactActivity extends AppCompatActivity {
                 lastNameData.setText(nom);
             }
             if(intent.hasExtra("prenom")) {
-                firstNameData = findViewById(R.id.firstname_data);
+                firstNameData = findViewById(R.id.lastname);
                 String prenom = intent.getStringExtra("prenom");
                 firstNameData.setText(prenom);
             }
@@ -67,6 +69,10 @@ public class DetailsContactActivity extends AppCompatActivity {
                 adressData = findViewById(R.id.adress_data);
                 String adresse = intent.getStringExtra("adresse");
                 adressData.setText(adresse);
+            }
+            if(intent.hasExtra("favori")) {
+                String favoris = intent.getStringExtra("favori");
+                favori.setText(favoris);
             }
         }
 

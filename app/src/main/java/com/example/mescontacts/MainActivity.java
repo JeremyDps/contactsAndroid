@@ -71,8 +71,9 @@ public class MainActivity extends AppCompatActivity {
                     String numero = c.getString(3);
                     String mail = c.getString(4);
                     String adresse = c.getString(5);
+                    String favori = c.getString(6);
 
-                    switchActivityDetail(view, nom, prenom, numero, mail, adresse);
+                    switchActivityDetail(view, nom, prenom, numero, mail, adresse, favori);
                 }
 
 
@@ -119,8 +120,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void switchActivityDetail(View view, String nom, String prenom, String numero, String mail, String adresse) {
+    public void switchActivityDetail(View view, String nom, String prenom, String numero, String mail, String adresse, String favori) {
         Intent intent = new Intent(this, DetailsContactActivity.class);
+        intent.putExtra("nom", nom);
+        intent.putExtra("prenom", prenom);
+        intent.putExtra("numero", numero);
+        intent.putExtra("mail", mail);
+        intent.putExtra("adresse", adresse);
+        intent.putExtra("favori", favori);
+        startActivity(intent);
+    }
+
+    public void switchActivityUpdate(long id, String prenom, String nom, String numero, String mail, String adresse) {
+        Intent intent = new Intent(this, UpdateContactActivity.class);
+        intent.putExtra("id", id);
         intent.putExtra("nom", nom);
         intent.putExtra("prenom", prenom);
         intent.putExtra("numero", numero);
@@ -176,10 +189,13 @@ public class MainActivity extends AppCompatActivity {
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         Cursor SelectedTaskCursor = (Cursor) list.getItemAtPosition(info.position);
-        final String SelectedTask = SelectedTaskCursor.getString(SelectedTaskCursor.getColumnIndex("nom"));
+        final long SelectedId = Long.parseLong(SelectedTaskCursor.getString(SelectedTaskCursor.getColumnIndex("_id")));
+        final String SelectedLastName = SelectedTaskCursor.getString(SelectedTaskCursor.getColumnIndex("nom"));
+        final String SelectedFirstName = SelectedTaskCursor.getString(SelectedTaskCursor.getColumnIndex("prenom"));
         final String SelectedAddress = SelectedTaskCursor.getString(SelectedTaskCursor.getColumnIndex("adresse"));
         final String SelectedPhoneNumber = SelectedTaskCursor.getString(SelectedTaskCursor.getColumnIndex("telephone"));
         final String SelectedEMail = SelectedTaskCursor.getString(SelectedTaskCursor.getColumnIndex("mail"));
+        final String SelectedFavori = SelectedTaskCursor.getString(SelectedTaskCursor.getColumnIndex("favori"));
 
         switch (item.getItemId()) {
             case R.id.supp:
@@ -225,8 +241,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(mapIntent);
                 return true;
             case R.id.modifier:
-                Intent intent = new Intent(this, UpdateContactActivity.class);
-                startActivity(intent);
+                switchActivityUpdate(SelectedId, SelectedFirstName, SelectedLastName, SelectedPhoneNumber, SelectedEMail, SelectedAddress);
             default:
                 return super.onContextItemSelected(item);
         }

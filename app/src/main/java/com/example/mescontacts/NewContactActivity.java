@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Switch;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -20,6 +21,7 @@ public class NewContactActivity extends AppCompatActivity {
     EditText num;
     EditText mail;
     EditText adr;
+    Switch favori;
     ListView list;
     ContactDbAdapter maBase;
 
@@ -32,6 +34,7 @@ public class NewContactActivity extends AppCompatActivity {
         num = findViewById(R.id.numTel);
         mail = findViewById(R.id.email);
         adr = findViewById(R.id.adresse);
+        favori = findViewById(R.id.favori);
         list = findViewById(R.id.taskList);
 
         maBase = new ContactDbAdapter(this);
@@ -52,12 +55,21 @@ public class NewContactActivity extends AppCompatActivity {
 
     //crée un nouveau contact dans la BDD
     public void addItem(View view) {
+        String isFavori;
         nom = findViewById(R.id.nom);
         prenom = findViewById(R.id.prenom);
         num = findViewById(R.id.numTel);
         mail = findViewById(R.id.email);
         adr = findViewById(R.id.adresse);
-        maBase.createContact(nom.getText().toString(),prenom.getText().toString(),num.getText().toString(), mail.getText().toString(), adr.getText().toString());
+        favori = findViewById(R.id.favori);
+
+        if(favori.isChecked()) {
+            isFavori = "1";
+        }else{
+            isFavori = "0";
+        }
+
+        maBase.createContact(nom.getText().toString(),prenom.getText().toString(),num.getText().toString(), mail.getText().toString(), adr.getText().toString(), isFavori);
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
