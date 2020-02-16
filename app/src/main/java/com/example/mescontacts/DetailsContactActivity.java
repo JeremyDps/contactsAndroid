@@ -72,7 +72,11 @@ public class DetailsContactActivity extends AppCompatActivity {
             }
             if(intent.hasExtra("favori")) {
                 String favoris = intent.getStringExtra("favori");
-                favori.setText(favoris);
+                if(favoris.equals("0")) {
+                    favori.setText("Ce contact ne fait pas partie de la liste des favoris");
+                }else {
+                    favori.setText("Ce contact fait partie de la liste des favoris");
+                }
             }
         }
 

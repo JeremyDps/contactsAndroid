@@ -109,6 +109,10 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_delete) {
             delete();
         }
+        if (id == R.id.action_only_prefered) {
+            Log.i("DEBUG", "affichage des favoris");
+            fillDataPrefered();
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -131,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void switchActivityUpdate(long id, String prenom, String nom, String numero, String mail, String adresse) {
+    public void switchActivityUpdate(long id, String prenom, String nom, String numero, String mail, String adresse, String favori) {
         Intent intent = new Intent(this, UpdateContactActivity.class);
         intent.putExtra("id", id);
         intent.putExtra("nom", nom);
@@ -139,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("numero", numero);
         intent.putExtra("mail", mail);
         intent.putExtra("adresse", adresse);
+        intent.putExtra("favori", favori);
         startActivity(intent);
     }
 
@@ -165,6 +170,19 @@ public class MainActivity extends AppCompatActivity {
     private void fillData() {
         // Get all of the notes from the database and create the item list
         Cursor c = maBase.fetchAllContact();
+        startManagingCursor(c);
+
+        String[] from = new String[]{ContactDbAdapter.KEY_NOM};
+        int[] to = new int[]{R.id.contact};
+
+        // Now create an array adapter and set it to display using our row
+        SimpleCursorAdapter notes =
+                new SimpleCursorAdapter(this, R.layout.contacts_row, c, from, to);
+        list.setAdapter(notes);
+    }
+
+    private void fillDataPrefered() {
+        Cursor c = maBase.fetchPreferedContact();
         startManagingCursor(c);
 
         String[] from = new String[]{ContactDbAdapter.KEY_NOM};
@@ -241,7 +259,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(mapIntent);
                 return true;
             case R.id.modifier:
-                switchActivityUpdate(SelectedId, SelectedFirstName, SelectedLastName, SelectedPhoneNumber, SelectedEMail, SelectedAddress);
+                switchActivityUpdate(SelectedId, SelectedFirstName, SelectedLastName, SelectedPhoneNumber, SelectedEMail, SelectedAddress, SelectedFavori);
             default:
                 return super.onContextItemSelected(item);
         }

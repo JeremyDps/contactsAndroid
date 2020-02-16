@@ -10,22 +10,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Switch;
 import android.widget.TextView;
 
 public class UpdateContactActivity extends AppCompatActivity {
 
     ContactDbAdapter maBase;
 
-    ImageView imageCall;
-    ImageView imageEmail;
-    ImageView imageMessage;
-    ImageView imageAdress;
+    ImageView imageCall, imageEmail, imageMessage, imageAdress;
 
-    TextView firstNameData;
-    TextView lastNameData;
-    TextView phoneNumberData;
-    TextView emailData;
-    TextView adressData;
+    TextView firstNameData, lastNameData, phoneNumberData, emailData, adressData;
+
+    Switch favori;
 
     Button buttonUpdate;
 
@@ -36,7 +32,7 @@ public class UpdateContactActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_contact);
 
-        String nom, prenom, numero, mail, adresse;
+        String nom, prenom, numero, mail, adresse, favoris;
         long id;
 
         imageCall = findViewById(R.id.image_call);
@@ -49,6 +45,8 @@ public class UpdateContactActivity extends AppCompatActivity {
         emailData = findViewById(R.id.email_data);
         phoneNumberData = findViewById(R.id.phone_number_data);
         adressData = findViewById(R.id.adress_data);
+
+        favori = findViewById(R.id.favori);
 
         buttonUpdate = findViewById(R.id.button_update);
 
@@ -84,6 +82,14 @@ public class UpdateContactActivity extends AppCompatActivity {
                 adresse = intent.getStringExtra("adresse");
                 adressData.setText(adresse);
             }
+            if(intent.hasExtra("favori")) {
+                favoris = intent.getStringExtra("favori");
+                if(favoris.equals("1")) {
+                    favori.setChecked(true);
+                }else{
+                    favori.setChecked(false);
+                }
+            }
         }
 
         buttonUpdate.setOnClickListener(new View.OnClickListener() {
@@ -97,8 +103,15 @@ public class UpdateContactActivity extends AppCompatActivity {
                 String numero = phoneNumberData.getText().toString();
                 String mail = emailData.getText().toString();
                 String adresse = adressData.getText().toString();
+                String isFavori;
 
-                if(maBase.updateContact(id, nom, prenom, numero, mail, adresse)) {
+                if(favori.isChecked()){
+                    isFavori = "1";
+                }else{
+                    isFavori = "0";
+                }
+
+                if(maBase.updateContact(id, nom, prenom, numero, mail, adresse, isFavori)) {
                     Log.i("DEBUG", "update success");
                     swithActivity(v);
                 }else{

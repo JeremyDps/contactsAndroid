@@ -136,6 +136,18 @@ public class ContactDbAdapter {
                 KEY_PRENOM, KEY_NUM, KEY_MAIL, KEY_ADR, KEY_FAVORI}, null, null, null, null, null);
     }
 
+    public Cursor fetchPreferedContact() {
+        return mDb.query(DATABASE_TABLE, new String[] {
+                KEY_ROWID,
+                KEY_NOM,
+                KEY_PRENOM,
+                KEY_NUM,
+                KEY_MAIL,
+                KEY_ADR,
+                KEY_FAVORI
+        }, KEY_FAVORI + "=1", null, null, null, null);
+    }
+
     /**
      * Return a Cursor positioned at the note that matches the given rowId
      *
@@ -164,7 +176,7 @@ public class ContactDbAdapter {
      * @param rowId id of note to update
      * @return true if the note was successfully updated, false otherwise
      */
-    public boolean updateContact(long rowId, String nom, String prenom, String num, String mail, String adr) {
+    public boolean updateContact(long rowId, String nom, String prenom, String num, String mail, String adr, String favori) {
 
 
         ContentValues args = new ContentValues();
@@ -173,6 +185,7 @@ public class ContactDbAdapter {
         args.put(KEY_NUM, num);
         args.put(KEY_MAIL, mail);
         args.put(KEY_ADR, adr);
+        args.put(KEY_FAVORI, favori);
 
         Log.i("DEBUG", "dans la abse");
 
