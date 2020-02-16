@@ -29,8 +29,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
@@ -222,6 +224,9 @@ public class MainActivity extends AppCompatActivity {
                 Intent mapIntent = new Intent(Intent.ACTION_VIEW, location);
                 startActivity(mapIntent);
                 return true;
+            case R.id.modifier:
+                Intent intent = new Intent(this, UpdateContactActivity.class);
+                startActivity(intent);
             default:
                 return super.onContextItemSelected(item);
         }

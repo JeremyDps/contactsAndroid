@@ -31,4 +31,10 @@
         android:title="Localiser l'adresse"
         app:actionViewClass="android.widget.SearchView" />
 
+    <item
+        android:id="@+id/modifier"
+        android:icon="@drawable/ic_launcher_background"
+        android:title="Modifier le contact"
+        app:actionViewClass="android.widget.SearchView" />
+
 </menu>
