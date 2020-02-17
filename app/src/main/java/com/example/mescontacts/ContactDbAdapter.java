@@ -132,8 +132,9 @@ public class ContactDbAdapter {
      */
     public Cursor fetchAllContact() {
 
+
         return mDb.query(DATABASE_TABLE, new String[] {KEY_ROWID, KEY_NOM,
-                KEY_PRENOM, KEY_NUM, KEY_MAIL, KEY_ADR, KEY_FAVORI}, null, null, null, null, null);
+                KEY_PRENOM, KEY_NUM, KEY_MAIL, KEY_ADR, KEY_FAVORI}, null, null, null, null, KEY_PRENOM + "," + KEY_NOM);
     }
 
     public Cursor fetchPreferedContact() {

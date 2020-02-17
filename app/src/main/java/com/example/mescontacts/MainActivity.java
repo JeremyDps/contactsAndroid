@@ -113,6 +113,9 @@ public class MainActivity extends AppCompatActivity {
             Log.i("DEBUG", "affichage des favoris");
             fillDataPrefered();
         }
+        if (id == R.id.action_all) {
+            fillData();
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -172,8 +175,8 @@ public class MainActivity extends AppCompatActivity {
         Cursor c = maBase.fetchAllContact();
         startManagingCursor(c);
 
-        String[] from = new String[]{ContactDbAdapter.KEY_NOM};
-        int[] to = new int[]{R.id.contact};
+        String[] from = new String[]{ContactDbAdapter.KEY_PRENOM, ContactDbAdapter.KEY_NOM};
+        int[] to = new int[]{R.id.contact1, R.id.contact2};
 
         // Now create an array adapter and set it to display using our row
         SimpleCursorAdapter notes =
@@ -185,8 +188,8 @@ public class MainActivity extends AppCompatActivity {
         Cursor c = maBase.fetchPreferedContact();
         startManagingCursor(c);
 
-        String[] from = new String[]{ContactDbAdapter.KEY_NOM};
-        int[] to = new int[]{R.id.contact};
+        String[] from = new String[]{ContactDbAdapter.KEY_PRENOM, ContactDbAdapter.KEY_NOM};
+        int[] to = new int[]{R.id.contact1, R.id.contact2};
 
         // Now create an array adapter and set it to display using our row
         SimpleCursorAdapter notes =

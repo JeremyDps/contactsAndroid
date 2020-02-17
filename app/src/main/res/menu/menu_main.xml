@@ -12,4 +12,10 @@
         android:orderInCategory="100"
         android:title="Afficher les favoris">
     </item>
+
+    <item
+        android:id="@+id/action_all"
+        android:orderInCategory="100"
+        android:title="Afficher tous les contacts">
+    </item>
 </menu>
